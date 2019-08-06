@@ -205,7 +205,9 @@ func convertMessage(message MessageAggregate) C.struct_gowhatsapp_message {
  * Errors will likely cause the front-end to destroy the connection.
  */
 func (handler *waHandler) HandleError(err error) {
-	if strings.Contains(err.Error(), whatsapp.ErrInvalidWsData.Error()) { // TODO: less ugly error comparison
+	if strings.Contains(err.Error(), whatsapp.ErrInvalidWsData.Error()) ||
+		strings.Contains(err.Error(), "invalid string with tag 174") ||
+		strings.Contains(err.Error(), "can't handle binary data when not logged in") { // TODO: less ugly error comparison
 		// this error is not actually an error
 		//fmt.Fprintf(os.Stderr, "gowhatsapp: %v ignored.\n", err)
 	} else {
